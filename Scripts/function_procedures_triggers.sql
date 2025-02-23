@@ -21,9 +21,9 @@ CREATE OR REPLACE FUNCTION bem_cultural_mais_antigo()
 RETURNS TABLE(IdBem INT, Nome VARCHAR, Seculo INT) AS $$
 BEGIN
     RETURN QUERY 
-    SELECT IdBem, Nome, Seculo
-    FROM Bem_cultural
-    ORDER BY Seculo ASC
+    SELECT bc.IdBem, bc.Nome, bc.Seculo
+    FROM Bem_cultural bc
+    ORDER BY bc.Seculo ASC
     LIMIT 1;
 END;
 $$ LANGUAGE plpgsql;
@@ -125,6 +125,10 @@ CREATE TABLE Log_Evento (
     NomeNovo VARCHAR(25),
     DataAlteracao TIMESTAMP DEFAULT NOW()
 );
+
+ALTER TABLE Log_Evento
+  ALTER COLUMN NomeAntigo TYPE VARCHAR(100),
+  ALTER COLUMN NomeNovo TYPE VARCHAR(100);
 
 CREATE OR REPLACE FUNCTION log_alteracao_evento()
 RETURNS TRIGGER AS $$
