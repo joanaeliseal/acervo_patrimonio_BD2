@@ -52,19 +52,21 @@ SELECT * FROM Bem_cultural WHERE IdCategoria = 1;
 CREATE INDEX idx_bem_regiao ON Bem_cultural (IdRegiao);
 SELECT * FROM Bem_cultural WHERE IdRegiao = 2;
 
+SELECT * FROM pg_indexes WHERE tablename = 'bem_cultural';
+
 -- Reescrita de consulta:
 
 -- consulta 1:
 SELECT Nome, Seculo
 FROM Bem_cultural
-WHERE Seculo = (
-    SELECT MIN(Seculo) FROM Bem_cultural
+WHERE Seculo = ( --  Seleciona apenas os registros cujo Seculo é igual a esse menor valor.
+    SELECT MIN(Seculo) FROM Bem_cultural -- Calcula o menor valor presente na coluna Seculo de toda a tabela Bem_cultural.
 );
 -- reescrita 1:
 SELECT Nome, Seculo
 FROM Bem_cultural
-ORDER BY Seculo ASC
-LIMIT 10;
+ORDER BY Seculo ASC -- Organiza todos os registros de Bem_cultural em ordem crescente pelo campo Seculo.
+LIMIT 10; -- Retorna apenas os 10 primeiros registros dessa ordenação.
 
 -- consulta 2:
 SELECT B.Nome AS "Bem Cultural", C.Nome AS "Categoria"
