@@ -23,6 +23,7 @@ FROM Responsavel R
 INNER JOIN Bem_cultural B ON R.IdResponsavel = B.IdResponsavel;
 
 -- 1 consulta com left/right/full outer join na cláusula FROM
+-- retorna todos os bens culturais, mesmo que nao estejam associados a eventos historicos
 SELECT B.Nome AS "Bem Cultural", E.Nome AS "Evento Histórico"
 FROM Bem_cultural B
 LEFT JOIN Evento_historico E ON B.IdEvento = E.IdEvento;
@@ -38,28 +39,29 @@ SELECT R.Nome AS "Região", COUNT(B.IdBem) AS "Quantidade de Bens"
 FROM Bem_cultural B
 INNER JOIN Regiao R ON B.IdRegiao = R.IdRegiao
 GROUP BY R.Nome
-HAVING COUNT(B.IdBem) > 1;
+HAVING COUNT(B.IdBem) > 1; -- retorna as regiões que possuem mais de um bem cultural cadastrado 
 
 
 -- 1 consulta usando alguma operação de conjunto (union, except ou intersect)
-SELECT IdBem, Nome, 'Material' AS Tipo
+SELECT B.IdBem, B.Nome, 'Material' AS Tipo
 FROM Bem_cultural B
 INNER JOIN Bem_cultural_material BM ON B.IdBem = BM.IdBem
-UNION
-SELECT IdBem, Nome, 'Imaterial' AS Tipo
+UNION -- combina os dois conjuntos em uma única lista
+SELECT B.IdBem, B.Nome, 'Imaterial' AS Tipo
 FROM Bem_cultural B
 INNER JOIN Bem_cultural_imaterial BI ON B.IdBem = BI.IdBem;
 
 -- 2 consultas que usem subqueries.
 -- consulta 1:
+-- retorna os nomes dos bens culturais que pertencem à categoria mais representada na tabela Bem_cultural
 SELECT Nome
 FROM Bem_cultural
 WHERE IdCategoria = (
     SELECT IdCategoria
     FROM Bem_cultural
     GROUP BY IdCategoria
-    ORDER BY COUNT(IdBem) DESC
-    LIMIT 1
+    ORDER BY COUNT(IdBem) DESC -- Conta quantos bens culturais existem em cada categoria; ordena os bens por ordem decrescente, logo, a categoria com maior qtde vão aparecer primeiro
+    LIMIT 1 -- Retorna apenas o primeiro grupo, ou seja, a categoria que possui o maior número de bens culturais.
 );
 -- consulta 2:
 SELECT Nome, Seculo
