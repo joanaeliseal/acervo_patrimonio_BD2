@@ -92,7 +92,18 @@ ALTER TABLE Bem_cultural ADD COLUMN IdRegiao INT;
 ALTER TABLE Bem_cultural ADD COLUMN IdResponsavel INT;
 ALTER TABLE Bem_cultural ADD COLUMN IdEvento INT;
 
--- Atualização de Bens Culturais com Eventos Históricos
+-- Alteração do tamanho de variáveis:
+ALTER TABLE Bem_cultural ALTER COLUMN Nome TYPE VARCHAR(50);
+ALTER TABLE Bem_cultural_material ALTER COLUMN Nome TYPE VARCHAR(50);
+ALTER TABLE Bem_cultural_imaterial ALTER COLUMN Nome TYPE VARCHAR(50);
+
+ALTER TABLE Evento_historico ALTER COLUMN Nome TYPE VARCHAR(50);
+
+ALTER TABLE Responsavel ALTER COLUMN RazaoSocial TYPE VARCHAR(60);
+
+ALTER TABLE Bem_cultural_imaterial ALTER COLUMN ComunidadeAssociada TYPE VARCHAR(40)
+
+/* Atualização de Bens Culturais com Eventos Históricos
 UPDATE Bem_cultural
 SET IdEvento = (SELECT IdEvento FROM Evento_historico WHERE Nome = 'Fundação da Fazenda Acauã')
 WHERE Nome = 'Casa, Capela e Sobrado da Fazenda Acauã';
@@ -104,4 +115,4 @@ WHERE Nome = 'Palácio da Redenção';
 UPDATE Bem_cultural
 SET IdEvento = (SELECT IdEvento FROM Evento_historico WHERE Nome = 'Reabertura do Mosteiro de São Bento')
 WHERE Nome = 'Mosteiro de São Bento';
-s
+*/
