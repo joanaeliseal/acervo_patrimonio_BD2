@@ -60,7 +60,6 @@ INSERT INTO Bem_cultural (IdBem, Nome, Descricao, DataOrigem, Seculo, IdCategori
 (10, 'Teatro de Bonecos Popular do Nordeste', 'Manifestação teatral que utiliza bonecos, conhecida por diferentes nomes na região.', 'Século XIX', 19, 5, 1, 1, NULL);
 
 -- Inserção de Bens Culturais Materiais (Especialização)
--- Neste exemplo, mantive a coluna única de coordenadas, mas você pode ajustar se tiver colunas separadas para latitude e longitude.
 INSERT INTO Bem_cultural_material (IdBem, Endereco, CoordGeog, EstadoConservacao, ProtecaoLegal) VALUES
 (1, 'Cabedelo - PB', 'Latitude -7.0035, Longitude -34.8284', 'Bom', 'Federal'),
 (2, 'Centro Histórico de João Pessoa - PB, Latitude -7.1195', 'Longitude -34.8828', 'Restaurado', 'Federal'),
